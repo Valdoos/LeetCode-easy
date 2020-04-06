@@ -5,8 +5,6 @@ func isAnagram(s string, t string) bool {
     hashS := make(map[byte]int)
     for i,end:=0,len(s);i<end;i++{
         hashS[s[i]]++
-    }
-    for i,end:=0,len(t);i<end;i++{
         hashS[t[i]]--
     }
     for _,v := range hashS{
