@@ -10,3 +10,13 @@ func moveZeroes(nums []int)  {
         nums[next] = 0
     }
 }
+
+func moveZeroes(nums []int)  {
+    last := 0
+    for i, n := range nums {
+        if n != 0 {
+            nums[last], nums[i] = n, nums[last]
+            last++
+        }
+    }
+}
