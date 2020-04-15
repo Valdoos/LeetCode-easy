@@ -2,31 +2,26 @@ import "fmt"
 func getHint(secret string, guess string) string {
     A:=0
     B:=0
-    hash := make(map[byte]int,len(secret))
-    for i,ll:=0,len(secret); i<ll; i++{
-        hash[secret[i]]++
-    }
-    for i:=0; i<len(guess);{
-        if guess[i]==secret[i] {
+    var countS [10]int
+    var countG [10]int
+    for i := range secret {
+        s := secret[i]-'0'
+        g := guess[i]-'0'
+        if secret[i] == guess[i] {
             A++
-            hash[secret[i]]--
-            if hash[secret[i]] == 0{
-                delete(hash, secret[i])
-            }
-            guess = guess[:i]+guess[i+1:]
-            secret = secret[:i]+secret[i+1:]
-        } else {
-            i++
+            continue
         }
-    }
-    for i,ll:=0,len(guess); i<ll; i++{
-        if _, ok := hash[guess[i]]; ok{
+        if countS[g] > 0 {
             B++
-            hash[guess[i]]--        
-            if hash[guess[i]]==0 {            
-                delete(hash, guess[i])
-            }
-            
+            countS[g]--
+        } else {
+            countG[g]++
+        }
+        if countG[s] > 0 {
+            B++
+            countG[s]--
+        } else {
+            countS[s]++
         }
     }
     return fmt.Sprintf("%dA%dB",A,B)
