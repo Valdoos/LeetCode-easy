@@ -5,5 +5,6 @@ func isPowerOfFour(n int) bool {
 }
 
 func isPowerOfFour(n int) bool {
-    return n>0 && 1073741824 % n == 0 && ( n==1 || n%10 == 4 || n%10 == 6)
+    return n>0 && 1073741824 % n == 0 && (n%10 == 4 || n%10 == 6 || n==1 )
 }
+
