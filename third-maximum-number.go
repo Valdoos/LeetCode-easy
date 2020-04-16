@@ -1,27 +1,23 @@
 import "math"
 func thirdMax(nums []int) int {
-    max := int64(math.MinInt64)
-    secondMax := max
-    thirdMax := max
-    ok := 0
-    for _, num := range nums {
-        k := int64(num)
+    max := math.MinInt64
+    secondMax := math.MinInt64
+    thirdMax := math.MinInt64
+    count := 0
+    for _, k := range nums {
         if k > max {
-            thirdMax = secondMax
-            secondMax = max
-            max = k        
-            ok++
-        } else if k > secondMax && max!=k{
-            thirdMax = secondMax
-            secondMax = k
-            ok++
-        } else if k > thirdMax && secondMax!=k && max!=k{
+            thirdMax, secondMax, max = secondMax, max, k     
+            count++
+        } else if k > secondMax && k < max {
+            thirdMax, secondMax = secondMax, k
+            count++
+        } else if k > thirdMax && k < secondMax {
             thirdMax = k
-            ok++
+            count++
         }
     }
-    if ok >= 3{
-        return int(thirdMax)
+    if count > 2 {
+        return thirdMax
     }
-    return int(max)
+    return max
 }
