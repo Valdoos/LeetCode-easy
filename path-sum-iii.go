@@ -7,19 +7,18 @@
  * }
  */
 func pathSum(root *TreeNode, sum int) int {
-    return findSum(root,sum,false)
+    return findSum(root,0,sum,map[int]int{0:1})
 }
 
-func findSum(root *TreeNode, sum int, used bool) int {
+func findSum(root *TreeNode,current,target int, hash map[int]int) int {
     if root == nil {
         return 0
     }
-    paths := findSum(root.Left, sum - root.Val, true) + findSum(root.Right, sum - root.Val, true)
-    if !used {
-        paths += findSum(root.Left, sum, false) + findSum(root.Right,sum, false)
-    }
-    if root.Val == sum {
-        return paths+1
-    }
-    return paths
+    current+=root.Val
+    sum := hash[current-target]
+    hash[current]++
+    sum += findSum(root.Left,current,target, hash)
+    sum += findSum(root.Right,current,target,hash)
+    hash[current]--
+    return sum
 }
